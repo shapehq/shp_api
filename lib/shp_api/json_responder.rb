@@ -36,7 +36,7 @@ module ShpApi
     
     # Render generic 500 error message (rescue_from)
     def exception(exception: nil)
-      msg = exception ? exception.message : "(ShpApi instance) Internal Server Error"
+      msg = exception ? exception.message : "Internal Server Error"
       @controller.render partial: "shp_api/error", locals: { message: msg, error_code: "exception" }, status: 500
       return false
     end
