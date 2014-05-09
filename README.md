@@ -185,6 +185,25 @@ Returns status: 422 Unprocessable Entity
 }
 ```
 
+The "data" element can also sometimes include an "errors" object containing
+the name of the model who's validation failed and an array including the
+specific validation errors:
+
+```JSON
+{
+  "data": {
+    "error_code": "invalid",
+    "errors": {
+      "rating": [
+        "must be a number between 0 and 10"
+      ]
+    },
+    "message": "Invalid"
+  },
+  "status": "error"
+}
+```
+
 ##### Object Conflict
 
 ```ruby
