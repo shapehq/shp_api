@@ -26,6 +26,90 @@ which then returns common JSON error responses for the following exceptions:
 * ActionController::ParameterMissing
 * ActiveRecord::RecordNotFound
 
+### Json Responses
+
+The gem includes responses for the most common Api responses which are callable
+from any Rails controller.
+
+#### 200 OK with an empty body
+
+```ruby
+ShpApi::JsonResponder.new(self).ok
+```
+
+#### 204 No Content
+
+```ruby
+ShpApi::JsonResponder.new(self).no_content
+```
+
+#### 201 Created
+
+```ruby
+ShpApi::JsonResponder.new(self).created
+```
+
+#### User not signed in
+
+```ruby
+ShpApi::JsonResponder.new(self).unauthorized(message: "Unauthorized", error_code: "unauthorized")
+```
+
+Returns status: 401 Unauthorized
+
+```JSON
+{
+  "status": "error",
+  "data": {
+    "message": "Unauthorized",
+    "error_code": "unauthorized"
+  }
+}
+```
+
+#### XXX
+
+```ruby
+ShpApi::JsonResponder.new(self).unauthorized
+```
+
+#### XXX
+
+```ruby
+ShpApi::JsonResponder.new(self).unauthorized
+```
+
+#### XXX
+
+```ruby
+ShpApi::JsonResponder.new(self).unauthorized
+```
+
+#### XXX
+
+```ruby
+ShpApi::JsonResponder.new(self).unauthorized
+```
+
+#### XXX
+
+```ruby
+ShpApi::JsonResponder.new(self).unauthorized
+```
+
+#### XXX
+
+```ruby
+ShpApi::JsonResponder.new(self).unauthorized
+```
+
+#### XXX
+
+```ruby
+ShpApi::JsonResponder.new(self).unauthorized
+```
+
+
 
 
 
