@@ -236,6 +236,15 @@ This is used for returning a positive result to fx. a jQuery ajax request where
 no return data is needed.
 
 
+## Releasing a new version
+
+* Bump version number in lib/shp_api/version.rb
+* Bump version number in README (this file)
+* Commit changes.
+* git tag -a v<version_number>
+* git push origin master
+* git push --tags origin master
+
 
 ## Contributing
 
