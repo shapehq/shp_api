@@ -7,7 +7,7 @@ all our API's.
 
 Add this line to your application's Gemfile:
 
-    gem 'shp_api', '~> 0.0.1', github: 'shapehq/shape_api_standards_public'
+    gem 'shp_api', '~> 0.0.1', github: 'shapehq/shp_api'
 
 And then execute:
 
