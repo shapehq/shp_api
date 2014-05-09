@@ -37,17 +37,21 @@ from any Rails controller.
 ShpApi::JsonResponder.new(self).ok
 ```
 
-#### 204 No Content
+#### Update single objects
 
 ```ruby
 ShpApi::JsonResponder.new(self).no_content
 ```
 
-#### 201 Created
+Returns status: 204 No Content with an empty body
+
+#### Create single object
 
 ```ruby
 ShpApi::JsonResponder.new(self).created
 ```
+
+Returns status: 201 Created with an empty body
 
 #### User not signed in
 
@@ -67,10 +71,22 @@ Returns status: 401 Unauthorized
 }
 ```
 
-#### XXX
+#### Insufficient user rights
 
 ```ruby
-ShpApi::JsonResponder.new(self).unauthorized
+ShpApi::JsonResponder.new(self).forbidden
+```
+
+Returns status: 403 Forbidden
+
+```JSON
+{
+  "status": "error",
+  "data": {
+    "message": "User doesn't have rights to create employees",
+    "error_code": "forbidden"
+  }
+}
 ```
 
 #### XXX
