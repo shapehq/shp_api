@@ -240,8 +240,8 @@ no return data is needed.
 
 * Bump version number in lib/shp_api/version.rb
 * Bump version number in README (this file)
-* Commit changes.
-* git tag -a v<version_number>
+* Commit changes & push changes.
+* git tag -a v&lt;version_number&gt;
 * git push origin master
 * git push --tags origin master
 
