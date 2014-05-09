@@ -1,6 +1,6 @@
 # ShpApi
 
-Shape API gem for Rails apps containing the most common methdos shared by
+Shape API gem for Rails apps containing the most common methods shared by
 all our API's.
 
 ## Installation
