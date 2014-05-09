@@ -1,24 +1,34 @@
 # ShpApi
 
-TODO: Write a gem description
+Shape API gem for Rails apps containing the most common methdos shared by
+all our API's.
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-    gem 'shp_api'
+    gem 'shp_api', '~> 0.0.1', github: 'shapehq/shape_api_standards_public'
 
 And then execute:
 
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install shp_api
+    $ bundle install
 
 ## Usage
 
-TODO: Write usage instructions here
+A projects common Api controller should:
+
+```ruby
+include ShpApi::RescueFrom
+```
+which then returns common JSON error responses for the following exceptions:
+
+* Exception
+* ActionController::ParameterMissing
+* ActiveRecord::RecordNotFound
+
+
+
+
 
 ## Contributing
 

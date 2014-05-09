@@ -5,11 +5,7 @@ module ShpApi
   module RescueFrom
     extend ActiveSupport::Concern
     include ActiveSupport::Rescuable
-    #include ActiveRecord::ActiveRecordError
-    #include ActiveRecord::Validations
-    #include ActiveModel::Validations
-    #include ActiveModel::Model
- 
+    
     included do
       
       # rescue_from are evaluated bottom-to-top so we rescue general
@@ -25,14 +21,6 @@ module ShpApi
       rescue_from ActiveRecord::RecordNotFound do |exception|
         ShpApi::JsonResponder.new(self).not_found(exception: exception)
       end
-      
-      # rescue_from ActionController::RecordNotFound do |exception|
-#         ShpApi::JsonResponder.new(self).not_found(exception: exception)
-#       end
-      
-      # rescue_from Permission::AccessDenied do |exception|
-#         ShpApi::JsonResponder.new(self).forbidden(exception: exception)
-#       end
       
     end
   end
