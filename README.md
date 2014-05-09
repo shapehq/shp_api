@@ -71,6 +71,60 @@ Returns status: 401 Unauthorized
 }
 ```
 
+#### Conflict
+
+```ruby
+ShpApi::JsonResponder.new(self).conflict(message: "Conflict", error_code: "conflict")
+```
+
+Returns status: 409 Conflict
+
+```JSON
+{
+  "status": "error",
+  "data": {
+    "message": "Conflict",
+    "error_code": "conflict"
+  }
+}
+```
+
+#### Custom error
+
+```ruby
+ShpApi::JsonResponder.new(self).error(message: "Not specified", error_code: "not_specified", status: 400)
+```
+
+Returns status: 400 Bad Request
+
+```JSON
+{
+  "status": "error",
+  "data": {
+    "message": "Not specified",
+    "error_code": "not_specified"
+  }
+}
+```
+
+#### Update single object failed
+
+```ruby
+ShpApi::JsonResponder.new(self).model_error(message: "Invalid", error_code: "invalid", model_errors: nil, status: 422)
+```
+
+Returns status: 422 Unprocessable Entity
+
+```JSON
+{
+  "status": "error",
+  "data": {
+    "message": "Invalid",
+    "error_code": "invalid"
+  }
+}
+```
+
 #### Insufficient user rights
 
 ```ruby
@@ -89,46 +143,59 @@ Returns status: 403 Forbidden
 }
 ```
 
-#### XXX
+#### Required parameters missing
 
 ```ruby
-ShpApi::JsonResponder.new(self).unauthorized
+ShpApi::JsonResponder.new(self).param_missing(exception: nil)
 ```
 
-#### XXX
+Returns status: 400 Bad Request
+
+```JSON
+{
+  "status": "error",
+  "data": {
+    "message": "Param not found: employee_title",
+    "error_code": "param_missing"
+  }
+}
+```
+
+#### Not found
 
 ```ruby
-ShpApi::JsonResponder.new(self).unauthorized
+ShpApi::JsonResponder.new(self).not_found(exception: nil, error_code: "not_found")
 ```
 
-#### XXX
+Returns status: 404 Not Found
+
+```JSON
+{
+  "status": "error",
+  "data": {
+    "message": "Not Found",
+    "error_code": "not_found"
+  }
+}
+```
+
+#### Internal Server Error
 
 ```ruby
-ShpApi::JsonResponder.new(self).unauthorized
+ShpApi::JsonResponder.new(self).exception(exception: nil)
 ```
 
-#### XXX
+Returns status: 500 Internal Server Error
 
-```ruby
-ShpApi::JsonResponder.new(self).unauthorized
+```JSON
+{
+  "status": "error",
+  "data": {
+    "message": "Internal Server Error",
+    "error_code": "exception"
+  }
+}
 ```
-
-#### XXX
-
-```ruby
-ShpApi::JsonResponder.new(self).unauthorized
-```
-
-#### XXX
-
-```ruby
-ShpApi::JsonResponder.new(self).unauthorized
-```
-
-
-
-
-
 
 ## Contributing
 
