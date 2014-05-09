@@ -15,48 +15,36 @@ And then execute:
 
 ## Usage
 
-A projects common Api controller should:
+The gem currently consists of two parts:
+
+* Common resque_from blocks for API controllers.
+* Common responses for API JSON views.
+
+
+### Common resque_from blocks
+
+The base API controller should:
 
 ```ruby
 include ShpApi::RescueFrom
 ```
-which then returns common JSON error responses for the following exceptions:
+which will then return common JSON error responses for the following exceptions:
 
 * Exception
 * ActionController::ParameterMissing
 * ActiveRecord::RecordNotFound
 
-### Json Responses
 
-The gem includes responses for the most common Api responses which are callable
-from any Rails controller.
+### Common JSON responses
 
-#### 200 OK with an empty body
+Any API controller can use the following methods to return a standard JSON response.
 
-```ruby
-ShpApi::JsonResponder.new(self).ok
-```
+#### Generic/Shared
 
-#### Update single objects
+##### User not signed in
 
 ```ruby
-ShpApi::JsonResponder.new(self).no_content
-```
-
-Returns status: 204 No Content with an empty body
-
-#### Create single object
-
-```ruby
-ShpApi::JsonResponder.new(self).created
-```
-
-Returns status: 201 Created with an empty body
-
-#### User not signed in
-
-```ruby
-ShpApi::JsonResponder.new(self).unauthorized(message: "Unauthorized", error_code: "unauthorized")
+ShpApi::JsonResponder.new(self).unauthorized(message: "Unauthorized")
 ```
 
 Returns status: 401 Unauthorized
@@ -71,61 +59,7 @@ Returns status: 401 Unauthorized
 }
 ```
 
-#### Conflict
-
-```ruby
-ShpApi::JsonResponder.new(self).conflict(message: "Conflict", error_code: "conflict")
-```
-
-Returns status: 409 Conflict
-
-```JSON
-{
-  "status": "error",
-  "data": {
-    "message": "Conflict",
-    "error_code": "conflict"
-  }
-}
-```
-
-#### Custom error
-
-```ruby
-ShpApi::JsonResponder.new(self).error(message: "Not specified", error_code: "not_specified", status: 400)
-```
-
-Returns status: 400 Bad Request
-
-```JSON
-{
-  "status": "error",
-  "data": {
-    "message": "Not specified",
-    "error_code": "not_specified"
-  }
-}
-```
-
-#### Update single object failed
-
-```ruby
-ShpApi::JsonResponder.new(self).model_error(message: "Invalid", error_code: "invalid", model_errors: nil, status: 422)
-```
-
-Returns status: 422 Unprocessable Entity
-
-```JSON
-{
-  "status": "error",
-  "data": {
-    "message": "Invalid",
-    "error_code": "invalid"
-  }
-}
-```
-
-#### Insufficient user rights
+##### Insufficient user rights
 
 ```ruby
 ShpApi::JsonResponder.new(self).forbidden
@@ -143,7 +77,79 @@ Returns status: 403 Forbidden
 }
 ```
 
-#### Required parameters missing
+##### Not Found
+
+```ruby
+ShpApi::JsonResponder.new(self).not_found(exception: nil)
+```
+
+Returns status: 404 Not Found
+
+```JSON
+{
+  "status": "error",
+  "data": {
+    "message": "Not Found",
+    "error_code": "not_found"
+  }
+}
+```
+
+##### Bad Request/Error with custom error_code
+
+```ruby
+ShpApi::JsonResponder.new(self).error(message: "Not specified", error_code: "not_specified")
+```
+
+Returns status: 400 Bad Request
+
+```JSON
+{
+  "status": "error",
+  "data": {
+    "message": "Not specified",
+    "error_code": "not_specified"
+  }
+}
+```
+
+##### Internal Server Error
+
+```ruby
+ShpApi::JsonResponder.new(self).exception
+```
+
+Returns status: 500 Internal Server Error
+
+```JSON
+{
+  "status": "error",
+  "data": {
+    "message": "Internal Server Error",
+    "error_code": "exception"
+  }
+}
+```
+
+#### Create/Update/Delete data
+
+##### Create single object
+
+```ruby
+ShpApi::JsonResponder.new(self).created
+```
+
+Returns status: 201 Created with an empty body
+
+##### Update/Delete single object
+
+```ruby
+ShpApi::JsonResponder.new(self).no_content
+```
+
+Returns status: 204 No Content with an empty body
+
+##### Required parameters missing
 
 ```ruby
 ShpApi::JsonResponder.new(self).param_missing(exception: nil)
@@ -161,41 +167,56 @@ Returns status: 400 Bad Request
 }
 ```
 
-#### Not found
+##### Object validation failed
 
 ```ruby
-ShpApi::JsonResponder.new(self).not_found(exception: nil, error_code: "not_found")
+ShpApi::JsonResponder.new(self).model_error(message: "Invalid", model_errors: nil)
 ```
 
-Returns status: 404 Not Found
+Returns status: 422 Unprocessable Entity
 
 ```JSON
 {
   "status": "error",
   "data": {
-    "message": "Not Found",
-    "error_code": "not_found"
+    "message": "Invalid",
+    "error_code": "invalid"
   }
 }
 ```
 
-#### Internal Server Error
+##### Object Conflict
 
 ```ruby
-ShpApi::JsonResponder.new(self).exception(exception: nil)
+ShpApi::JsonResponder.new(self).conflict(message: "Conflict")
 ```
 
-Returns status: 500 Internal Server Error
+Returns status: 409 Conflict
 
 ```JSON
 {
   "status": "error",
   "data": {
-    "message": "Internal Server Error",
-    "error_code": "exception"
+    "message": "Conflict",
+    "error_code": "conflict"
   }
 }
 ```
+
+#### Other
+
+##### 200 OK with an empty body
+
+```ruby
+ShpApi::JsonResponder.new(self).ok
+```
+
+Returns status: 200 OK with an empty body
+
+This is used for returning a positive result to fx. a jQuery ajax request where
+no return data is needed.
+
+
 
 ## Contributing
 
