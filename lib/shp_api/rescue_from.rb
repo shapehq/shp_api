@@ -8,8 +8,6 @@ module ShpApi
     
     included do
       
-      raise "hell"
-      
       # rescue_from are evaluated bottom-to-top so we rescue general
       # exception last.
       rescue_from Exception do |exception|
