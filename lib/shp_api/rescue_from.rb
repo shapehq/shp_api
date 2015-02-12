@@ -1,6 +1,3 @@
-# require 'active_record/errors'
-# require "active_record/validations.rb"
-
 module ShpApi
   module RescueFrom
     extend ActiveSupport::Concern
