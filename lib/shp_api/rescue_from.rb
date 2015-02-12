@@ -27,14 +27,15 @@ module ShpApi
     module ClassMethods
 
       def shp_api_notify_opbeat(exception: nil)
-        self.class.shp_api_class_send('::Opbeat', 'capture_exception', exception)
-      end
-
-      # Only call Opbeat if class and method exists
-      def shp_api_class_send(class_name, method, *args)
+        class_name = 'Opbeat'
+        method = 'capture_exception'
+        
+        # Check that class and methods exists
         return nil unless Object.const_defined?(class_name)
         c = Object.const_get(class_name)
-        c.respond_to?(method) ? c.send(method, *args) : nil
+        return nil unless c.respond_to?(method)
+        
+        ::Opbeat.capture_exception(exception)
       end
 
     end
