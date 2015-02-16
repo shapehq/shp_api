@@ -9,24 +9,24 @@ module ShpApi
       # exception last.
       rescue_from Exception do |exception|
         ShpApi::JsonResponder.new(self).exception(exception: exception)
-        self.class.shp_api_notify_opbeat(exception: exception)
+        self.class.shp_api_notify_opbeat(exception: exception, user: current_user)
       end
       
       rescue_from ActionController::ParameterMissing do |exception|
         ShpApi::JsonResponder.new(self).param_missing(exception: exception)
-        self.class.shp_api_notify_opbeat(exception: exception)
+        self.class.shp_api_notify_opbeat(exception: exception, user: current_user)
       end
       
       rescue_from ActiveRecord::RecordNotFound do |exception|
         ShpApi::JsonResponder.new(self).not_found(exception: exception)
-        self.class.shp_api_notify_opbeat(exception: exception)
+        self.class.shp_api_notify_opbeat(exception: exception, user: current_user)
       end
       
     end
     
     module ClassMethods
 
-      def shp_api_notify_opbeat(exception: nil)
+      def shp_api_notify_opbeat(exception: nil, user: nil)
         class_name = 'Opbeat'
         method = 'capture_exception'
         
@@ -38,8 +38,8 @@ module ShpApi
         ::Opbeat.capture_exception(
           exception,
           user: {
-            id:    current_user.try(:id),
-            email: current_user.try(:email)          
+            id:    user.try(:id),
+            email: user.try(:email)          
           }
         )
       end
