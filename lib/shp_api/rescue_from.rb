@@ -35,7 +35,13 @@ module ShpApi
         c = Object.const_get(class_name)
         return nil unless c.respond_to?(method)
         
-        ::Opbeat.capture_exception(exception, user: current_user)
+        ::Opbeat.capture_exception(
+          exception,
+          user: {
+            id:    current_user.try(:id),
+            email: current_user.try(:email)          
+          }
+        )
       end
 
     end
