@@ -235,11 +235,56 @@ Returns status: 200 OK with an empty body
 This is used for returning a positive result to fx. a jQuery ajax request where
 no return data is needed.
 
+##### 200 OK with data
+
+```ruby
+data = User.all.as_json(include: [:device_tokens])
+meta = { :current_page => 1 }
+ShpApi::JsonResponder.new(self).data(data: data, meta: meta, status: :ok)
+```
+
+Returns status: 200 OK with a body:
+```JSON
+{
+  "status": "success",
+  "meta": {
+    "current_page": 1,
+    "total_page_count": 3,
+    "page_record_count": 25,
+    "total_record_count": 53,
+    "links": {
+      "next": "http://localhost:3000/api/v1/users?page=2&per_page=25",
+      "prev": null,
+      "last": "http://localhost:3000/api/v1/users?page=3&per_page=25",
+      "first": "http://localhost:3000/api/v1/users?page=1&per_page=25"
+    }
+  },
+  "data": [
+    {
+      "id": 1,
+      "email": "gert+user@shape.dk",
+      "name": "Gert User Jørgensen",
+      "created_at": "2015-10-26T13:45:27.789Z",
+      "updated_at": "2015-10-26T13:45:27.789Z",
+      "device_tokens": [
+        {
+          "id": 1,
+          "token": "token-1445873776",
+          "platform": "apns"
+        }
+      ]
+    }
+  ]
+}
+```
+
+This is used for returning a positive result to fx. a jQuery ajax request where
+no return data is needed.
+
 
 ## Releasing a new version
 
 * Bump version number in lib/shp_api/version.rb
-* Bump version number in README (this file)
 * Commit changes & push changes.
 * git tag -a v&lt;version_number&gt;
 * git push origin master

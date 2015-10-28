@@ -82,6 +82,20 @@ module ShpApi
       return false
     end
     
+    # Render http 200 OK with data
+    def data(data: nil, meta: nil, status: :ok)
+      if data
+        result = {}
+        result["status"] = "success"
+        result["meta"] = meta if meta
+        result["data"] = data
+        json = MultiJson.dump(result)
+        @controller.render json: json, status: status
+      else
+        head status: :no_content
+      end
+    end
+    
     private
     
     def append_view_path_to_rails

@@ -23,4 +23,5 @@ Gem::Specification.new do |spec|
   
   spec.add_dependency("rails", "~> 4.0")
   spec.add_dependency("jbuilder", "~> 2.0")
+  spec.add_dependency("multi_json", "~> 1.11.2")
 end
