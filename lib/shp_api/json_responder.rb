@@ -92,7 +92,7 @@ module ShpApi
         json = MultiJson.dump(result)
         @controller.render json: json, status: status
       else
-        head status: :no_content
+        @controller.head status: :no_content
       end
     end
     
