@@ -9,16 +9,19 @@ module ShpApi
       # exception last.
       rescue_from Exception do |exception|
         ShpApi::JsonResponder.new(self).exception(exception: exception)
+        current_user ||= nil
         self.class.shp_api_notify_opbeat(exception: exception, user: current_user)
       end
       
       rescue_from ActionController::ParameterMissing do |exception|
         ShpApi::JsonResponder.new(self).param_missing(exception: exception)
+        current_user ||= nil
         self.class.shp_api_notify_opbeat(exception: exception, user: current_user)
       end
       
       rescue_from ActiveRecord::RecordNotFound do |exception|
         ShpApi::JsonResponder.new(self).not_found(exception: exception)
+        current_user ||= nil
         self.class.shp_api_notify_opbeat(exception: exception, user: current_user)
       end
       

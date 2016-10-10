@@ -6,8 +6,8 @@ require 'shp_api/version'
 Gem::Specification.new do |spec|
   spec.name          = "shp_api"
   spec.version       = ShpApi::VERSION
-  spec.authors       = ["Gert Joergensen"]
-  spec.email         = ["gert@shape.dk"]
+  spec.authors       = ["Gert Joergensen", "Ulrik Andersen"]
+  spec.email         = ["ulrik@shape.dk"]
   spec.description   = %q{Common ruby code for building rails APIs}
   spec.summary       = %q{Common API methods}
   spec.homepage      = ""
@@ -21,7 +21,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "bundler", "~> 1.3"
   spec.add_development_dependency "rake"
   
-  spec.add_dependency("rails", "~> 4.0")
-  spec.add_dependency("jbuilder", "~> 2.0")
-  spec.add_dependency("multi_json", "~> 1.11.2")
+  spec.add_dependency("rails", "~> 5.0")
+  spec.add_dependency("jbuilder", "~> 2.6")
+  spec.add_dependency("multi_json", "~> 1.12.1")
 end
