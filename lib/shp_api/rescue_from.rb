@@ -31,7 +31,7 @@ module ShpApi
 
       def shp_api_notify_opbeat(exception: nil, user: nil)
         class_name = 'Opbeat'
-        method = 'capture_exception'
+        method = 'report'
         
         # Check that class and methods exists
         return nil unless Object.const_defined?(class_name)
