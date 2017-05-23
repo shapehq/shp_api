@@ -7,7 +7,7 @@ all our API's.
 
 Add this line to your application's Gemfile:
 
-    gem 'shp_api', '~> 0.1.0', github: 'shapehq/shp_api'
+    gem 'shp_api', '~> 0.2.0', github: 'shapehq/shp_api'
 
 And then execute:
 
@@ -17,7 +17,7 @@ And then execute:
 
 The gem currently consists of two parts:
 
-* Common resque_from blocks for API controllers.
+* Common resque_from blocks for API controllers. The gem will report errors to Opbeat if installed.
 * Common responses for API JSON views.
 
 
