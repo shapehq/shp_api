@@ -9,43 +9,73 @@ module ShpApi
     ### Generic errors:
     
     # Render http 401 Unauthorized
-    def unauthorized(message: "Unauthorized")
-      @controller.render partial: "shp_api/error", locals: { message: message, error_code: "unauthorized" }, status: 401
+    def unauthorized(message: "Unauthorized", meta: nil)
+      @controller.render partial: "shp_api/error", locals: {
+        message: message,
+        error_code: "unauthorized",
+        meta: meta
+      }, status: 401
+
       return false
     end
     
     # Render http 403 Forbidden (rescue_from)
-    def forbidden(exception: nil)
+    def forbidden(exception: nil, meta: nil)
       msg = exception ? exception.message : "Forbidden"
-      @controller.render partial: "shp_api/error", locals: { message: msg, error_code: "forbidden" }, status: 403
+      @controller.render partial: "shp_api/error", locals: {
+        message: msg,
+        error_code: "forbidden",
+        meta: meta
+      }, status: 403
+
       return false
     end
     
     # Render http 404 Not found (rescue_from)
-    def not_found(exception: nil)
+    def not_found(exception: nil, meta: nil)
       msg = exception ? exception.message : "Not Found"
-      @controller.render partial: "shp_api/error", locals: { message: msg, error_code: "not_found" }, status: 404
+      @controller.render partial: "shp_api/error", locals: {
+        message: msg,
+        error_code: "not_found",
+        meta: meta
+      }, status: 404
+
       return false
     end
     
     # Render error message with custom http status
-    def error(message: "Not specified", error_code: "not_specified")
-      @controller.render partial: "shp_api/error", locals: { message: message, error_code: error_code }, status: 400
+    def error(message: "Not specified", error_code: "not_specified", meta: nil)
+      @controller.render partial: "shp_api/error", locals: {
+        message: message,
+        error_code: error_code,
+        meta: meta
+      }, status: 400
+
       return false
     end
     
     # Render generic 500 error message (rescue_from)
-    def exception(exception: nil)
+    def exception(exception: nil, meta: nil)
       msg = exception ? exception.message : "Internal Server Error"
-      @controller.render partial: "shp_api/error", locals: { message: msg, error_code: "exception" }, status: 500
+      @controller.render partial: "shp_api/error", locals: {
+        message: msg,
+        error_code: "exception",
+        meta: meta
+      }, status: 500
+
       return false
     end
     
     ### Create/Update/Delete data:
     
     # Render http 201 Created
-    def created
-      @controller.render nothing: true, status: 201
+    def created(meta: nil)
+      if meta
+        @controller.render json: { meta: meta }, status: 201
+      else
+        @controller.render nothing: true, status: 201
+      end
+
       return false
     end
     
@@ -56,29 +86,48 @@ module ShpApi
     end
     
     # Render http 400 for missing parameters (rescue_from)
-    def param_missing(exception: nil)
+    def param_missing(exception: nil, meta: nil)
       msg = exception ? exception.message : "Parameter missing"
-      @controller.render partial: "shp_api/error", locals: { message: msg, error_code: "param_missing" }, status: 400
+      @controller.render partial: "shp_api/error", locals: {
+        message: msg,
+        error_code: "param_missing",
+        meta: meta
+      }, status: 400
+
       return false
     end
     
     # Render error message including model validation errors
-    def model_error(message: "Invalid", error_code: "invalid", model_errors: nil, status: 422)
-      @controller.render partial: "shp_api/error", locals: { message: message, error_code: error_code, model_errors: model_errors }, status: status
+    def model_error(message: "Invalid", error_code: "invalid", model_errors: nil, status: 422, meta: nil)
+      @controller.render partial: "shp_api/error", locals: {
+        message: message,
+        error_code: error_code,
+        model_errors: model_errors,
+        meta: meta
+      }, status: status
+
       return false
     end
     
     # Render http 409 Conflict
-    def conflict(message: "Conflict", error_code: "conflict")
-      @controller.render partial: "shp_api/error", locals: { message: message, error_code: error_code }, status: 409
+    def conflict(message: "Conflict", error_code: "conflict", meta: nil)
+      @controller.render partial: "shp_api/error", locals: {
+        message: message,
+        error_code: error_code,
+        meta: meta
+      }, status: 409
+
       return false
     end
     
     ### Other:
     
     # Render http 200 OK
-    def ok
-      @controller.render json: ""
+    def ok(meta: nil)
+      result = { "meta" => meta } if meta
+      json = MultiJson.dump(result)
+
+      @controller.render json: json
       return false
     end
     
