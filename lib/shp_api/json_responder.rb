@@ -71,9 +71,9 @@ module ShpApi
     # Render http 201 Created
     def created(meta: nil)
       if meta
-        @controller.render json: { meta: meta }, status: 201
+        @controller.render json: { meta: meta }, status: :created
       else
-        @controller.render nothing: true, status: 201
+        @controller.head :created
       end
 
       return false
@@ -81,7 +81,8 @@ module ShpApi
     
     # Render http 204 No Content (update/destroy)
     def no_content
-      @controller.render nothing: true, status: 204
+      @controller.head :no_content
+
       return false
     end
     
@@ -124,10 +125,12 @@ module ShpApi
     
     # Render http 200 OK
     def ok(meta: nil)
-      result = { "meta" => meta } if meta
-      json = MultiJson.dump(result)
+      if meta
+        @controller.render json: { meta: meta }, status: :ok
+      else
+        @controller.head :ok
+      end
 
-      @controller.render json: json
       return false
     end
     
@@ -141,7 +144,7 @@ module ShpApi
         json = MultiJson.dump(result)
         @controller.render json: json, status: status
       else
-        @controller.head status: :no_content
+        @controller.head :no_content
       end
     end
     
