@@ -17,7 +17,7 @@ And then execute:
 
 The gem currently consists of two parts:
 
-* Common resque_from blocks for API controllers. The gem will report errors to Opbeat if installed.
+* Common resque_from blocks for API controllers.
 * Common responses for API JSON views.
 
 
