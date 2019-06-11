@@ -2,7 +2,7 @@ model_errors = [] if local_assigns[:model_errors].nil?
 
 json.status "error"
 json.meta meta if meta
-if error_data
+if json.error_data
   json.data error_data
 else
   json.data do
