@@ -8,9 +8,6 @@ else
   json.data do
     json.message message
     json.error_code error_code
-    if json.data
-      json.data data
-    end
     if model_errors.size > 0
       json.errors model_errors
     end
