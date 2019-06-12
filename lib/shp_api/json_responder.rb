@@ -44,13 +44,13 @@ module ShpApi
     end
     
     # Render error message with custom http status
-    def error(message: "Not specified", error_code: "not_specified", meta: nil)
+    def error(message: "Not specified", error_code: "not_specified", meta: nil, data: nil)
       @controller.render partial: "shp_api/error", locals: {
         message: message,
         error_code: error_code,
+        error_data: data,
         meta: meta
       }, status: 400
-
       return false
     end
     
