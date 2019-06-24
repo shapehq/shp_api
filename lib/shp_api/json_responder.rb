@@ -1,3 +1,5 @@
+require 'multi_json'
+
 module ShpApi
   class JsonResponder
     
